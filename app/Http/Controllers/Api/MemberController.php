@@ -59,36 +59,38 @@ class MemberController extends Controller
     /**
      * Update member
      */
-    public function update(Request $request, string $id)
-    {
-        $member = Member::findOrFail($id);
+    public function update(Request $request, Member $member)
+{
+    $validated = $request->validate([
+        'name' => 'sometimes',
+        'phone' => 'sometimes',
+        'birth_date' => 'sometimes',
+        'address' => 'sometimes',
+        'school' => 'nullable',
+        'stage' => 'nullable',
+        'father_name' => 'nullable',
+        'mother_name' => 'nullable',
+        'confession_father' => 'nullable',
+        'notes' => 'nullable'
+    ]);
 
-        $validated = $request->validate([
-            'name' => 'sometimes',
-            'phone' => 'sometimes',
-            'birth_date' => 'sometimes',
-            'address' => 'sometimes',
-            'school' => 'nullable',
-            'notes' => 'nullable'
-        ]);
+    $member->update($validated);
 
-        $member->update($validated);
-
-        return response()->json([
-            'message' => 'updated successfully',
-            'member' => $member
-        ]);
-    }
+    return response()->json([
+        'message' => 'updated successfully',
+        'member' => $member
+    ]);
+}
 
     /**
      * Delete member
      */
-    public function destroy(string $id)
-    {
-        Member::destroy($id);
+  public function destroy(Member $member)
+{
+    $member->delete();
 
-        return response()->json([
-            'message' => 'deleted successfully'
-        ]);
-    }
+    return response()->json([
+        'message' => 'Member deleted successfully'
+    ]);
+}
 }

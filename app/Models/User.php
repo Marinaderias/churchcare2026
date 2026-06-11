@@ -66,4 +66,24 @@ class User extends Authenticatable
         'member_user'
     );
    }
+
+   public function spiritualTasks()
+{
+    return $this->belongsToMany(
+        SpiritualTask::class,
+        'task_user'
+    )
+    ->withPivot(
+        'completed',
+        'completed_at'
+    )
+    ->withTimestamps();
+}
+
+   public function preparations()
+{
+    return $this->hasMany(
+        Preparation::class
+    );
+}
 }

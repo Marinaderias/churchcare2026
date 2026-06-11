@@ -19,20 +19,20 @@ class AttendanceController extends Controller
      * Store new attendance
      */
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'member_id' => 'required|exists:members,id',
-            'date' => 'required|date',
-            'status' => 'required'
-        ]);
+{
+    $validated = $request->validate([
+        'member_id' => 'required|exists:members,id',
+        'date' => 'required|date',
+        'status' => 'required|in:present,absent,late'
+    ]);
 
-        $attendance = Attendance::create($validated);
+    $attendance = Attendance::create($validated);
 
-        return response()->json([
-            'message' => 'attendance created successfully',
-            'attendance' => $attendance
-        ]);
-    }
+    return response()->json([
+        'message' => 'Attendance added successfully',
+        'attendance' => $attendance
+    ]);
+}
 
     /**
      * Show specific attendance

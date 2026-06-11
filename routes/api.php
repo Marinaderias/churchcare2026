@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\ServiceGroupController;
 use App\Http\Controllers\Api\VisitController;
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\AnnouncementController;
+use App\Http\Controllers\Api\PreparationController;
+use App\Http\Controllers\Api\SpiritualTaskController;
 
 Route::post('/login', [AuthController::class, 'login']); 
 
@@ -24,3 +26,7 @@ Route::apiResource('visits', VisitController::class);
 Route::apiResource('attendances', AttendanceController::class);
 
 Route::apiResource('announcements', AnnouncementController::class);
+
+Route::apiResource('preparations',PreparationController::class);
+
+Route::apiResource('spiritual-tasks',SpiritualTaskController::class);

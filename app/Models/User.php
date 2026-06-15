@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\ServiceGroup;
 use App\Models\Announcement;
 use App\Models\Visit;
+use App\Models\SpiritualTask;
 
 class User extends Authenticatable
 {
@@ -67,17 +68,17 @@ class User extends Authenticatable
     );
    }
 
-   public function spiritualTasks()
+public function spiritualTasks()
 {
     return $this->belongsToMany(
         SpiritualTask::class,
-        'task_user'
-    )
-    ->withPivot(
+        'task_user',
+        'user_id',
+        'task_id'
+    )->withPivot(
         'completed',
         'completed_at'
-    )
-    ->withTimestamps();
+    );
 }
 
    public function preparations()

@@ -10,27 +10,20 @@ class SpiritualTaskController extends Controller
 {
     public function index()
     {
-        return SpiritualTask::latest()->get();
+        return SpiritualTask::all();
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $task = SpiritualTask::create([
 
-            'title' => 'required',
+            'title' => $request->title,
 
-            'week_number' => 'required',
+            'active' => true
 
-            'month' => 'required',
-
-            'year' => 'required',
-
-            'created_by' => 'required'
         ]);
 
-        return SpiritualTask::create(
-            $validated
-        );
+        return $task;
     }
 
     public function show(string $id)
@@ -38,17 +31,11 @@ class SpiritualTaskController extends Controller
         return SpiritualTask::findOrFail($id);
     }
 
-    public function update(
-        Request $request,
-        string $id
-    )
+    public function update(Request $request, string $id)
     {
-        $task =
-            SpiritualTask::findOrFail($id);
+        $task = SpiritualTask::findOrFail($id);
 
-        $task->update(
-            $request->all()
-        );
+        $task->update($request->all());
 
         return $task;
     }

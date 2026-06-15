@@ -9,34 +9,19 @@ class SpiritualTask extends Model
     protected $fillable = [
 
         'title',
-
-        'week_number',
-
-        'month',
-
-        'year',
-
-        'created_by'
+        'active'
     ];
-
-    public function creator()
-    {
-        return $this->belongsTo(
-            User::class,
-            'created_by'
-        );
-    }
 
     public function users()
     {
         return $this->belongsToMany(
             User::class,
-            'task_user'
-        )
-        ->withPivot(
+            'task_user',
+            'task_id',
+            'user_id'
+        )->withPivot(
             'completed',
             'completed_at'
-        )
-        ->withTimestamps();
+        );
     }
 }

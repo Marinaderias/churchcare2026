@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Attendance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Member;
 
 class AttendanceController extends Controller
 {
@@ -18,15 +19,33 @@ class AttendanceController extends Controller
     /**
      * Store new attendance
      */
-    public function store(Request $request)
+public function store(Request $request)
 {
-    $validated = $request->validate([
-        'member_id' => 'required|exists:members,id',
-        'date' => 'required|date',
-        'status' => 'required|in:present,absent,late'
-    ]);
+    if ($request->member_code) {
 
-    $attendance = Attendance::create($validated);
+        $member = Member::where(
+            'member_code',
+            $request->member_code
+        )->firstOrFail();
+
+        $memberId = $member->id;
+
+    } else {
+
+        $memberId = $request->member_id;
+    }
+
+    $attendance = Attendance::create([
+
+        'member_id' => $memberId,
+
+        'date' => $request->date
+            ?? now()->toDateString(),
+
+        'status' => $request->status
+            ?? 'present'
+
+    ]);
 
     return response()->json([
         'message' => 'Attendance added successfully',

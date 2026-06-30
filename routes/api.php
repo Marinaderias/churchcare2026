@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\PreparationController;
 use App\Http\Controllers\Api\SpiritualTaskController;
 
+use App\Http\Controllers\Api\AdminDashboardController;
+
 Route::post('/login', [AuthController::class, 'login']); 
 
 Route::apiResource('users', UserController::class);
@@ -30,3 +32,9 @@ Route::apiResource('announcements', AnnouncementController::class);
 Route::apiResource('preparations',PreparationController::class);
 
 Route::apiResource('spiritual-tasks',SpiritualTaskController::class);
+
+
+Route::get(
+    '/admin/dashboard',
+    [AdminDashboardController::class, 'index']
+);
